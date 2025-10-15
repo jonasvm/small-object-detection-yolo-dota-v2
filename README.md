@@ -75,9 +75,3 @@
 | soccer ball field | 0.202088 |
 | swimming pool | 0.295612 |
 | container crane | 0.000000 |
-
----
-
-#### 🧾 Linha compacta (para tabela geral)
-
-| **YOLOv12n** | 42 | 0 | HBB | 0.616 | 0.436 | 0.830 | 0.555 | 0.479 | 0.300 | 0.791 | 0.425 | 0.468 | 0.309 | 0.768 | 0.411 | 48.898 ms | 2.861 | 3.406 | 6.271 MB |
