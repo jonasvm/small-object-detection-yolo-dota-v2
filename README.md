@@ -20,3 +20,64 @@
 | **YOLOv8n** | 42 | 0 | HBB | 0.616 | 0.436 | 0.830 | 0.555 | 0.479 | 0.300 | 0.791 | 0.425 | 0.468 | 0.309 | 0.768 | 0.411 | 53 ms | 2.861 | 3.406 | 6.3 MB |
 | **YOLOv8n** | 42 | 1 | HBB | 0.607 | 0.435 | 0.807 | 0.547 | 0.478 | 0.311 | 0.749 | 0.429 | 0.470 | 0.307 | 0.785 | 0.412 | 54 ms | 2.902 | 3.398 | 6.3 MB |
 | **YOLOv8n** | 42 | 2 | HBB | 0.620 | 0.439 | 0.838 | 0.555 | 0.472 | 0.309 | 0.690 | 0.442 | 0.473 | 0.312 | 0.769 | 0.419 | 50 ms | 2.877 | 3.391 | 6.3 MB |
+
+
+### 📊 Resultados — YOLOv12n (K-Fold 0, Seed 42)
+
+#### 📌 Metadados do experimento
+| Campo | Valor |
+|:--|:--|
+| Modelo | **YOLOv12n** |
+| Caminho | `/home/jonasvm/docker-images/meus_resultados/detect/train45/weights/best.pt` |
+| Seed | 42 |
+| K-Fold | 0 |
+| Bounding Box | HBB |
+| IMG | 1024 px |
+| Latência medida em | CPU |
+
+---
+
+#### 🧪 Métricas gerais + Losses
+
+| Split | mAP@50 | mAP@0.5:0.95 | Precision | Recall | Train Loss | Val Loss |
+|:--|:--:|:--:|:--:|:--:|:--:|:--:|
+| Train | 0.616 | 0.436 | 0.830 | 0.555 | 2.861 | — |
+| Val | 0.479 | 0.300 | 0.791 | 0.425 | — | 3.406 |
+| Test | 0.468 | 0.309 | 0.768 | 0.411 | — | — |
+
+---
+
+#### ⚙️ Recursos e desempenho
+
+| Latência média | FPS | RAM média | RAM pico | CPU média | Energia GPU (estimada) | FLOPs | # Parâmetros | Tempo total de treino (s) | Tamanho do modelo |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| 48.898 ms | 20.451 | 4214.949 MB | 4214.949 MB | 773.270% | NaN J | 20.739 GFLOPs | 3,008,768.000 | 1,173,063.525 | 6.271 MB |
+
+---
+
+#### 📊 AP por classe (Val)
+
+| Classe | AP@0.5:0.95 (val) |
+|:--|--:|
+| plane | 0.514465 |
+| ship | 0.358551 |
+| storage tank | 0.238049 |
+| baseball diamond | 0.363004 |
+| tennis court | 0.844425 |
+| basketball court | 0.352705 |
+| ground track field | 0.279459 |
+| harbor | 0.411751 |
+| bridge | 0.046430 |
+| large vehicle | 0.550918 |
+| small vehicle | 0.133208 |
+| helicopter | 0.070971 |
+| roundabout | 0.131531 |
+| soccer ball field | 0.202088 |
+| swimming pool | 0.295612 |
+| container crane | 0.000000 |
+
+---
+
+#### 🧾 Linha compacta (para tabela geral)
+
+| **YOLOv12n** | 42 | 0 | HBB | 0.616 | 0.436 | 0.830 | 0.555 | 0.479 | 0.300 | 0.791 | 0.425 | 0.468 | 0.309 | 0.768 | 0.411 | 48.898 ms | 2.861 | 3.406 | 6.271 MB |
