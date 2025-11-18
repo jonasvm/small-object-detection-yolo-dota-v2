@@ -1,0 +1,36 @@
+# Usa uma imagem base com suporte CUDA
+FROM nvidia/cuda:12.1.0-cudnn8-runtime-ubuntu20.04
+
+# Definir variável de ambiente para desabilitar interatividade
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Instala as dependências do sistema de forma não interativa
+RUN apt-get update && apt-get install -y \
+    python3 python3-pip git libglib2.0-0 libsm6 libxrender1 libxext6 libgl1-mesa-glx \
+    && rm -rf /var/lib/apt/lists/*
+
+# Cria o link simbólico para garantir que 'python' use python3
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
+# Atualiza o pip
+RUN python3 -m pip install --upgrade pip
+
+# Instala as bibliotecas necessárias: torch, torchvision, opencv e ultralytics
+RUN pip install --no-cache-dir \
+    torch torchvision numpy opencv-python-headless pandas matplotlib ultralytics
+
+# Copia o arquivo YAML e o dataset para dentro do contêiner
+COPY dota_dataset_v15_hbb/kfold/fold_1 /data/
+
+# Copia o script Python para dentro do contêiner
+COPY train-yolov11m-hbb-kfold1.py /app/
+
+# Garantir permissões para os arquivos copiados
+RUN chmod -R 755 /app /data
+
+# Define o diretório de trabalho onde o modelo e os dados estão localizados
+WORKDIR /app
+
+# Comando para rodar o script de treinamento
+CMD ["python3", "train-yolov11m-hbb-kfold1.py"] 
+

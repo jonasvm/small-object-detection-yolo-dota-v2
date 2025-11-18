@@ -1,0 +1,32 @@
+# Use uma imagem base com Python
+FROM python:3.8-slim
+
+# Instalar dependências do sistema
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libglib2.0-0 \
+    libsm6 \
+    libxrender1 \
+    libxext6
+
+# Instalar dependências Python
+RUN pip install --upgrade pip
+RUN pip install torch torchvision numpy opencv-python-headless pandas matplotlib
+
+RUN apt-get update && apt-get install -y libgl1-mesa-glx
+
+# Instalar o YOLOv5
+RUN git clone https://github.com/ultralytics/yolov5.git /yolov5
+WORKDIR /yolov5
+RUN pip install -r requirements.txt
+
+# Copiar o dataset para dentro da imagem
+COPY dota_dataset /yolov5/dota_dataset
+
+# Definir o diretório de trabalho
+WORKDIR /yolov5
+
+# Comando padrão para iniciar o treinamento
+CMD ["python", "train.py", "--data", "/yolov5/dota_dataset/dataset_config.yaml", "--weights", "yolov5s.pt", "--batch-size", "16", "--epochs", "50"]
+

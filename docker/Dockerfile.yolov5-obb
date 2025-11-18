@@ -1,0 +1,59 @@
+# Base com CUDA 12.1
+FROM nvidia/cuda:12.1.1-base-ubuntu20.04
+
+# Evita prompts interativos
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Instalar dependências do sistema
+RUN apt-get update && apt-get install -y \
+    git curl swig build-essential python3-dev python3-pip \
+    libglib2.0-0 libsm6 libxrender1 libxext6 \
+    libglvnd0 libglvnd-dev libglu1-mesa libosmesa6 libgl1-mesa-glx \
+    && rm -rf /var/lib/apt/lists/*
+
+# Instalar dependências do sistema
+RUN apt-get update && apt-get install -y \
+    git curl swig build-essential python3-dev python3-pip \
+    libglib2.0-0 libsm6 libxrender1 libxext6 \
+    libglvnd0 libglvnd-dev libglu1-mesa libosmesa6 libgl1-mesa-glx \
+    && ln -s /usr/bin/python3 /usr/bin/python \
+    && rm -rf /var/lib/apt/lists/*
+
+# Atualizar pip
+RUN pip install --upgrade pip
+
+# Instalar torch e libs com CUDA 12.1
+RUN pip install torch==2.2.2+cu121 torchvision==0.17.2+cu121 torchaudio==2.2.2 -f https://download.pytorch.org/whl/cu121/torch_stable.html
+
+# Instalar libs Python adicionais
+RUN pip install numpy opencv-python-headless pandas matplotlib
+
+# Clonar YOLOv5-OBB
+RUN git clone https://github.com/hukaixuan19970627/yolov5_obb.git /yolov5_obb
+WORKDIR /yolov5_obb
+
+# Instalar requisitos do repositório
+RUN pip install -r requirements.txt
+
+# Corrige o erro do np.int
+RUN sed -i 's/\.astype(np.int)/.astype(int)/g' /yolov5_obb/utils/datasets.py
+
+# Instalar NMS rotacionado
+RUN cd utils/nms_rotated && python setup.py develop
+
+# Instalar DOTA Devkit (SWIG já está instalado)
+RUN cd DOTA_devkit && \
+    swig -c++ -python polyiou.i && \
+    python setup.py build_ext --inplace
+
+# Copiar dataset (coloque depois de tudo)
+COPY dota_dataset /yolov5_obb/dota_dataset
+
+# Verificar CUDA
+RUN python -c "import torch; print('CUDA disponível:', torch.cuda.is_available())"
+
+# Definir o diretório final
+WORKDIR /yolov5_obb
+
+# Comando para treinar
+CMD ["python", "train.py", "--data", "/yolov5_obb/dota_dataset/dataset_config.yaml", "--weights", "yolov5s.pt", "--batch-size", "16", "--epochs", "50", "--device", "0"]
