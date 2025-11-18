@@ -1,0 +1,30 @@
+
+# Small Helper Guide
+
+# In first time:
+#
+#     1 - Use the clean_labels.py script, in order to remove non-coordinates text (they will cause an error if not).
+#     2 - Use the convert_labels_to_yolo_format_oficial.py to convert the coordinates from dota to yolo format.
+#     3 - The dataset final name must be dota_dataset_v15, and the dataset must be in the same folder of the docker image.
+#     4 - In the dataset descriptor (yaml), the image location must be data/images/train, data/images/val and /data/images/test .
+#     5 - Make sure the docker image and correspondent python script are in the same folder.
+#     6 - Make sure all paths in docker image and python scripts are correct.
+#     7 - Make sure you have a /meus_resultados folder, with wright permissions so save the results.
+
+#To build a docker image:
+docker build -f Dockerfile.yolov8-obb -t yolov8-training .
+
+#To run a built docker image, and save the results in the /meus_resultados directory:
+docker run --rm -it --gpus all --shm-size=64gb   -v /home/jonasvm/docker-images/meus_resultados:/app/runs   yolov8-training
+
+docker run --rm -it --gpus all --shm-size=64gb -e PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True -v /home/jonasvm/docker-images/meus_resultados:/app/runs yolov8-training
+
+#To start a python env
+source yolov12env/bin/activate
+source .venv/bin/activate
+
+
+#To clean docker images:
+docker system prune -a
+
+yolo8n , 200 epocas - 0.413 map5
