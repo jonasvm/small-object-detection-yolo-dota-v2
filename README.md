@@ -10,7 +10,7 @@ Contains presentations and research papers related to the project.
 - tbd
 
 ### 📂 docker
-Contains all docker images and related scripts used to train the YOLO models used in this research.
+Contains all docker images and related scripts used to train the YOLO models evaluated in this research.
 
 ### 📂 scripts
 Contains all auxilary scripts used during the research process, i.e. scripts to convert the DOTA image labels to correct format, scripts for SAHI, etc.
