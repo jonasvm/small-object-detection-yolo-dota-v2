@@ -1,6 +1,7 @@
-# Small Object Detection YOLO DOTA
+# Small Object Detection YOLO DOTA - V2
 
 This repository contains all code, trained model and scripts regarding a research about small object detection using different YOLO versions (v5, v8, v11, v12 | HBB and OBB) applied to the **DOTA V1.5** dataset.
+This project is a continuation of Small Object Detection YOLO DOTA (https://github.com/jonasvm/small-object-detection-yolo-dota).
 
 ## Repository Structure
 
